@@ -2,12 +2,13 @@ import "dotenv/config";
 import express from "express";
 import { InteractionType, InteractionResponseType } from "discord-interactions";
 import { VerifyDiscordRequest } from "./utils.js";
-// import { getShuffledOptions, getResult } from "./game.js";
 import {
   // CHALLENGE_COMMAND,
-  TEST_COMMAND,
   HasGuildCommands,
+  TEST_COMMAND,
+  GET_STATS_COMMAND,
 } from "./commands.js";
+import axios from "axios";
 
 // Create an express app
 const app = express();
@@ -48,12 +49,29 @@ app.post("/interactions", async function (req, res) {
         },
       });
     }
+    if (name === "mystats") {
+      const getStats = async () => {
+        axios
+          .get(
+            "https://api.mozambiquehe.re/bridge?auth=e31142840b23b46cc82ad64cdbbdb1ef&player=Vnovnick&platform=PC"
+          )
+          .then((res) => {
+            console.log(res.data.legends.selected);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
+      getStats();
+      return res.send({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: {
+          // Fetches a random emoji to send from a helper function
+          content: "see log",
+        },
+      });
+    }
   }
-
-  /**
-   * Handle requests from interactive components
-   * See https://discord.com/developers/docs/interactions/message-components#responding-to-a-component-interaction
-   */
 });
 
 app.listen(PORT, () => {
@@ -62,6 +80,6 @@ app.listen(PORT, () => {
   // Check if guild commands from commands.js are installed (if not, install them)
   HasGuildCommands(process.env.APP_ID, process.env.GUILD_ID, [
     TEST_COMMAND,
-    // CHALLENGE_COMMAND,
+    GET_STATS_COMMAND,
   ]);
 });
