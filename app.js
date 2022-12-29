@@ -22,7 +22,7 @@ app.use(express.json({ verify: VerifyDiscordRequest(process.env.PUBLIC_KEY) }));
  */
 app.post("/interactions", async function (req, res) {
   // Interaction type and data
-  const { type, id, data } = req.body;
+  const { type, id, data, member } = req.body;
 
   /**
    * Handle verification requests
@@ -36,6 +36,7 @@ app.post("/interactions", async function (req, res) {
    * See https://discord.com/developers/docs/interactions/application-commands#slash-commands
    */
   if (type === InteractionType.APPLICATION_COMMAND) {
+    const { user } = member;
     const { name } = data;
 
     // "test" guild command
@@ -53,10 +54,10 @@ app.post("/interactions", async function (req, res) {
       const getStats = async () => {
         axios
           .get(
-            "https://api.mozambiquehe.re/bridge?auth=e31142840b23b46cc82ad64cdbbdb1ef&player=Vnovnick&platform=PC"
+            `https://api.mozambiquehe.re/bridge?auth=e31142840b23b46cc82ad64cdbbdb1ef&player=${user.username}&platform=PC`
           )
           .then((res) => {
-            console.log(res.data.legends.selected);
+            console.log(res.data);
           })
           .catch((err) => {
             console.log(err);
