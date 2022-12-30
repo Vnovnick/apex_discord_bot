@@ -40,7 +40,6 @@ app.post("/interactions", async function (req, res) {
       return res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
-          // Fetches a random emoji to send from a helper function
           embeds: [
             {
               fields: [],
@@ -66,7 +65,6 @@ app.post("/interactions", async function (req, res) {
       return res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
-          // Fetches a random emoji to send from a helper function
           content: `${userStats}`,
         },
       });
@@ -85,8 +83,26 @@ app.post("/interactions", async function (req, res) {
       return res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
-          // Fetches a random emoji to send from a helper function
-          content: `${userStats.rankScore}`,
+          embeds: [
+            {
+              title: `${user.username}'s rank for the current season: `,
+              fields: [
+                {
+                  name: "Rank: ",
+                  value: `${userStats.rankName} ${userStats.rankDiv}`,
+                  inline: true,
+                },
+                {
+                  name: "Rank Score (RP): ",
+                  value: userStats.rankScore,
+                  inline: true,
+                },
+              ],
+              image: {
+                url: userStats.rankImg,
+              },
+            },
+          ],
         },
       });
     }
