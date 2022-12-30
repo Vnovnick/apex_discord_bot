@@ -8,6 +8,21 @@ import {
   GET_STATS_COMMAND,
 } from "./commands.js";
 import axios from "axios";
+import { Client, GatewayIntentBits, EmbedBuilder } from "discord.js";
+
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMessages,
+  ],
+});
+
+client.once("ready", () => {
+  console.log("bot is good to go!");
+});
+
+client.login(process.env.DISCORD_TOKEN);
 
 // Create an express app
 const app = express();
@@ -23,17 +38,12 @@ app.post("/interactions", async function (req, res) {
   // Interaction type and data
   const { type, data, member } = req.body;
 
-  /**
-   * Handle verification requests
-   */
+  // handles mandatory verification
   if (type === InteractionType.PING) {
     return res.send({ type: InteractionResponseType.PONG });
   }
 
-  /**
-   * Handle slash command requests
-   * See https://discord.com/developers/docs/interactions/application-commands#slash-commands
-   */
+  // handles any slash commands receieved
   if (type === InteractionType.APPLICATION_COMMAND) {
     const { user } = member;
     const { name } = data;
@@ -45,7 +55,14 @@ app.post("/interactions", async function (req, res) {
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
           // Fetches a random emoji to send from a helper function
-          content: "hello world what is up my guy",
+          embeds: [
+            {
+              fields: [],
+              title: "Test Embed",
+              description: "test embed",
+            },
+          ],
+          content: "__this is a test don't panic__",
         },
       });
     }
@@ -56,15 +73,15 @@ app.post("/interactions", async function (req, res) {
             `https://api.mozambiquehe.re/bridge?auth=e31142840b23b46cc82ad64cdbbdb1ef&player=${user.username}&platform=PC`
           )
           .catch((err) => console.log(err));
-        const myrank = response.data.global.rank.rankScore;
-        return myrank;
+        const userData = response.data.global;
+        return userData;
       };
-      let userRank = await getStats();
+      let userStats = await getStats();
       return res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
           // Fetches a random emoji to send from a helper function
-          content: `${userRank}`,
+          content: `${userStats}`,
         },
       });
     }
