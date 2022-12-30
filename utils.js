@@ -37,3 +37,24 @@ export async function DiscordRequest(endpoint, options) {
   // return original response
   return res;
 }
+
+export const setEmbedColor = (rank) => {
+  switch (rank) {
+    case "Bronze":
+      return 4929078;
+    case "Silver":
+      return 7500402;
+    case "Gold":
+      return 16764010;
+    case "Platinum":
+      return 2253920;
+    case "Diamond":
+      return 2719487;
+    case "Master":
+      return 8396031;
+    case "Predator":
+      return 11213338;
+    default:
+      return 6316128;
+  }
+};

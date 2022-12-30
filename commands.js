@@ -50,14 +50,9 @@ export const TEST_COMMAND = {
 };
 
 // apex bot commands
-export const GET_STATS_COMMAND = {
-  name: "mystats",
-  description: "Basic stat getter",
-  type: 1,
-};
-export const GET_ROYALE_RANK_COMMAND = {
-  name: "myroyalerank",
-  description: "Get current player rank for the current battle royale season",
+export const GET_PLAYER_INFO_COMMAND = {
+  name: "myinfo",
+  description: "Gets a snapshot of player info and rank",
   type: 1,
 };
 

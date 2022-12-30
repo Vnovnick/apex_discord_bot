@@ -1,12 +1,11 @@
 import "dotenv/config";
 import express from "express";
 import { InteractionType, InteractionResponseType } from "discord-interactions";
-import { VerifyDiscordRequest } from "./utils.js";
+import { VerifyDiscordRequest, setEmbedColor } from "./utils.js";
 import {
   HasGuildCommands,
   TEST_COMMAND,
-  GET_STATS_COMMAND,
-  GET_ROYALE_RANK_COMMAND,
+  GET_PLAYER_INFO_COMMAND,
 } from "./commands.js";
 import axios from "axios";
 
@@ -51,7 +50,7 @@ app.post("/interactions", async function (req, res) {
         },
       });
     }
-    if (name === "mystats") {
+    if (name === "myinfo") {
       const getStats = async () => {
         const response = await axios
           .get(
@@ -65,42 +64,30 @@ app.post("/interactions", async function (req, res) {
       return res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
-          content: `${userStats}`,
-        },
-      });
-    }
-    if (name === "myroyalerank") {
-      const getStats = async () => {
-        const response = await axios
-          .get(
-            `https://api.mozambiquehe.re/bridge?auth=e31142840b23b46cc82ad64cdbbdb1ef&player=${user.username}&platform=PC`
-          )
-          .catch((err) => console.log(err));
-        const userData = response.data.global.rank;
-        return userData;
-      };
-      let userStats = await getStats();
-      return res.send({
-        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-        data: {
+          content: `${userStats.name}'s info: `,
           embeds: [
             {
-              title: `${user.username}'s rank for the current season: `,
               fields: [
                 {
-                  name: "Rank: ",
-                  value: `${userStats.rankName} ${userStats.rankDiv}`,
-                  inline: true,
+                  name: "Platform: ",
+                  value: userStats.platform,
+                  inline: false,
                 },
                 {
-                  name: "Rank Score (RP): ",
-                  value: userStats.rankScore,
-                  inline: true,
+                  name: "Level:",
+                  value: "87 - *Prestige 1*",
+                  inline: false,
+                },
+                {
+                  name: "Current BR Rank:",
+                  value: "Platinum 3\nRP: 9350\n",
+                  inline: false,
                 },
               ],
-              image: {
-                url: userStats.rankImg,
+              thumbnail: {
+                url: userStats.rank.rankImg,
               },
+              color: setEmbedColor(userStats.rank.rankName),
             },
           ],
         },
@@ -115,7 +102,6 @@ app.listen(PORT, () => {
   // Check if guild commands from commands.js are installed (if not, install them)
   HasGuildCommands(process.env.APP_ID, process.env.GUILD_ID, [
     TEST_COMMAND,
-    GET_STATS_COMMAND,
-    GET_ROYALE_RANK_COMMAND,
+    GET_PLAYER_INFO_COMMAND,
   ]);
 });
