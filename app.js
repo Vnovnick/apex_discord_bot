@@ -3,7 +3,6 @@ import express from "express";
 import { InteractionType, InteractionResponseType } from "discord-interactions";
 import { VerifyDiscordRequest } from "./utils.js";
 import {
-  // CHALLENGE_COMMAND,
   HasGuildCommands,
   TEST_COMMAND,
   GET_STATS_COMMAND,
@@ -14,7 +13,7 @@ import axios from "axios";
 const app = express();
 // Get port, or default to 3000
 const PORT = process.env.PORT || 3000;
-// Parse request body and verifies incoming requests using discord-interactions package
+// Parse request body and verifies incoming requests using discord-interactions package (required on descord dev page)
 app.use(express.json({ verify: VerifyDiscordRequest(process.env.PUBLIC_KEY) }));
 
 /**
@@ -22,7 +21,7 @@ app.use(express.json({ verify: VerifyDiscordRequest(process.env.PUBLIC_KEY) }));
  */
 app.post("/interactions", async function (req, res) {
   // Interaction type and data
-  const { type, id, data, member } = req.body;
+  const { type, data, member } = req.body;
 
   /**
    * Handle verification requests
@@ -52,23 +51,20 @@ app.post("/interactions", async function (req, res) {
     }
     if (name === "mystats") {
       const getStats = async () => {
-        axios
+        const response = await axios
           .get(
             `https://api.mozambiquehe.re/bridge?auth=e31142840b23b46cc82ad64cdbbdb1ef&player=${user.username}&platform=PC`
           )
-          .then((res) => {
-            console.log(res.data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+          .catch((err) => console.log(err));
+        const myrank = response.data.global.rank.rankScore;
+        return myrank;
       };
-      getStats();
+      let userRank = await getStats();
       return res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
           // Fetches a random emoji to send from a helper function
-          content: "see log",
+          content: `${userRank}`,
         },
       });
     }
