@@ -6,6 +6,7 @@ import {
   HasGuildCommands,
   TEST_COMMAND,
   GET_PLAYER_INFO_COMMAND,
+  GET_PLAYER_LEGEND_STATS_COMMAND,
 } from "./commands.js";
 import axios from "axios";
 
@@ -75,12 +76,12 @@ app.post("/interactions", async function (req, res) {
                 },
                 {
                   name: "Level:",
-                  value: "87 - *Prestige 1*",
+                  value: `${userStats.level} - *Prestige ${userStats.levelPrestige}*`,
                   inline: false,
                 },
                 {
                   name: "Current BR Rank:",
-                  value: "Platinum 3\nRP: 9350\n",
+                  value: `${userStats.rank.rankName} ${userStats.rank.rankDiv}\nRP: ${userStats.rank.rankScore}\n`,
                   inline: false,
                 },
               ],
@@ -93,6 +94,60 @@ app.post("/interactions", async function (req, res) {
         },
       });
     }
+    if (name === "mylegendstats") {
+      const getStats = async () => {
+        const response = await axios
+          .get(
+            `https://api.mozambiquehe.re/bridge?auth=e31142840b23b46cc82ad64cdbbdb1ef&player=${user.username}&platform=PC`
+          )
+          .catch((err) => console.log(err));
+        const userData = response.data;
+        return userData;
+      };
+      let userStats = await getStats();
+      return res.send({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        options: [
+          {
+            name: "selected",
+            description: "Stats for selected legend",
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: `${userStats.global.name}'s selected legend stats: `,
+              embeds: [
+                {
+                  fields: [
+                    {
+                      name: "Legend: ",
+                      value: userStats.legends.selected.LegendName,
+                      inline: false,
+                    },
+                    {
+                      name: "First Tracker: ",
+                      value: `${userStats.legends.selected.data[0].name} - *${userStats.legends.selected.data[0].value}*`,
+                      inline: false,
+                    },
+                    {
+                      name: "Second Tracker: ",
+                      value: `${userStats.legends.selected.data[1].name} - *${userStats.legends.selected.data[1].value}*`,
+                      inline: false,
+                    },
+                    {
+                      name: "Third Tracker: ",
+                      value: `${userStats.legends.selected.data[2].name} - *${userStats.legends.selected.data[2].value}*`,
+                      inline: false,
+                    },
+                  ],
+                  thumbnail: {
+                    url: userStats.legends.selected.ImgAssets.icon,
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      });
+    }
   }
 });
 
@@ -103,5 +158,6 @@ app.listen(PORT, () => {
   HasGuildCommands(process.env.APP_ID, process.env.GUILD_ID, [
     TEST_COMMAND,
     GET_PLAYER_INFO_COMMAND,
+    GET_PLAYER_LEGEND_STATS_COMMAND,
   ]);
 });

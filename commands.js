@@ -56,6 +56,12 @@ export const GET_PLAYER_INFO_COMMAND = {
   type: 1,
 };
 
+export const GET_PLAYER_LEGEND_STATS_COMMAND = {
+  name: "mylegendstats",
+  description: "Get your legend stats",
+  type: 1,
+};
+
 // Command containing options
 // export const CHALLENGE_COMMAND = {
 //   name: "challenge",
