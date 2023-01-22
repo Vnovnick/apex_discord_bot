@@ -23,7 +23,6 @@ app.use(express.json({ verify: VerifyDiscordRequest(process.env.PUBLIC_KEY) }));
 app.post("/interactions", async function (req, res) {
   // Interaction type and data
   const { type, data, member } = req.body;
-
   // handles mandatory verification
   if (type === InteractionType.PING) {
     return res.send({ type: InteractionResponseType.PONG });
@@ -32,7 +31,8 @@ app.post("/interactions", async function (req, res) {
   // handles any slash commands receieved
   if (type === InteractionType.APPLICATION_COMMAND) {
     const { user } = member;
-    const { name } = data;
+    const { name, options } = data;
+    console.log(options);
 
     // "test" guild command
     if (name === "test") {
@@ -105,48 +105,43 @@ app.post("/interactions", async function (req, res) {
         return userData;
       };
       let userStats = await getStats();
-      return res.send({
-        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-        options: [
-          {
-            name: "selected",
-            description: "Stats for selected legend",
-            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-            data: {
-              content: `${userStats.global.name}'s selected legend stats: `,
-              embeds: [
-                {
-                  fields: [
-                    {
-                      name: "Legend: ",
-                      value: userStats.legends.selected.LegendName,
-                      inline: false,
-                    },
-                    {
-                      name: "First Tracker: ",
-                      value: `${userStats.legends.selected.data[0].name} - *${userStats.legends.selected.data[0].value}*`,
-                      inline: false,
-                    },
-                    {
-                      name: "Second Tracker: ",
-                      value: `${userStats.legends.selected.data[1].name} - *${userStats.legends.selected.data[1].value}*`,
-                      inline: false,
-                    },
-                    {
-                      name: "Third Tracker: ",
-                      value: `${userStats.legends.selected.data[2].name} - *${userStats.legends.selected.data[2].value}*`,
-                      inline: false,
-                    },
-                  ],
-                  thumbnail: {
-                    url: userStats.legends.selected.ImgAssets.icon,
+      if (options[0].name === "selected") {
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `${userStats.global.name}'s selected legend stats: `,
+            embeds: [
+              {
+                fields: [
+                  {
+                    name: "Legend: ",
+                    value: userStats.legends.selected.LegendName,
+                    inline: false,
                   },
+                  {
+                    name: "First Tracker: ",
+                    value: `${userStats.legends.selected.data[0].name} - *${userStats.legends.selected.data[0].value}*`,
+                    inline: false,
+                  },
+                  {
+                    name: "Second Tracker: ",
+                    value: `${userStats.legends.selected.data[1].name} - *${userStats.legends.selected.data[1].value}*`,
+                    inline: false,
+                  },
+                  {
+                    name: "Third Tracker: ",
+                    value: `${userStats.legends.selected.data[2].name} - *${userStats.legends.selected.data[2].value}*`,
+                    inline: false,
+                  },
+                ],
+                thumbnail: {
+                  url: userStats.legends.selected.ImgAssets.icon,
                 },
-              ],
-            },
+              },
+            ],
           },
-        ],
-      });
+        });
+      }
     }
   }
 });

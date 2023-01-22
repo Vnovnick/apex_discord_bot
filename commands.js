@@ -34,7 +34,8 @@ async function HasGuildCommand(appId, guildId, command) {
         console.log(`Installing "${command["name"]}"`);
         InstallGuildCommand(appId, guildId, command);
       } else {
-        console.log(`"${command["name"]}" command already installed`);
+        InstallGuildCommand(appId, guildId, command);
+        console.log(`"${command["name"]}" command updated`);
       }
     }
   } catch (err) {
@@ -59,6 +60,13 @@ export const GET_PLAYER_INFO_COMMAND = {
 export const GET_PLAYER_LEGEND_STATS_COMMAND = {
   name: "mylegendstats",
   description: "Get your legend stats",
+  options: [
+    {
+      name: "selected",
+      description: "Stats for selected legend",
+      type: 1,
+    },
+  ],
   type: 1,
 };
 
