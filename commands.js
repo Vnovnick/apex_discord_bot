@@ -63,7 +63,12 @@ export const GET_PLAYER_LEGEND_STATS_COMMAND = {
   options: [
     {
       name: "selected",
-      description: "Stats for selected legend",
+      description: "Stats for currently selected legend",
+      type: 1,
+    },
+    {
+      name: "revenant",
+      description: "Stats for Revenant",
       type: 1,
     },
   ],

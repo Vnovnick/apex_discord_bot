@@ -1,7 +1,12 @@
 import "dotenv/config";
 import express from "express";
 import { InteractionType, InteractionResponseType } from "discord-interactions";
-import { VerifyDiscordRequest, setEmbedColor } from "./utils.js";
+import {
+  VerifyDiscordRequest,
+  setEmbedColor,
+  legendEmbed,
+  legendEmbedWithRank,
+} from "./utils.js";
 import {
   HasGuildCommands,
   TEST_COMMAND,
@@ -110,35 +115,48 @@ app.post("/interactions", async function (req, res) {
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
             content: `${userStats.global.name}'s selected legend stats: `,
-            embeds: [
-              {
-                fields: [
-                  {
-                    name: "Legend: ",
-                    value: userStats.legends.selected.LegendName,
-                    inline: false,
-                  },
-                  {
-                    name: "First Tracker: ",
-                    value: `${userStats.legends.selected.data[0].name} - *${userStats.legends.selected.data[0].value}*`,
-                    inline: false,
-                  },
-                  {
-                    name: "Second Tracker: ",
-                    value: `${userStats.legends.selected.data[1].name} - *${userStats.legends.selected.data[1].value}*`,
-                    inline: false,
-                  },
-                  {
-                    name: "Third Tracker: ",
-                    value: `${userStats.legends.selected.data[2].name} - *${userStats.legends.selected.data[2].value}*`,
-                    inline: false,
-                  },
-                ],
-                thumbnail: {
-                  url: userStats.legends.selected.ImgAssets.icon,
-                },
-              },
-            ],
+            embeds: legendEmbed(
+              userStats.legends.selected.LegendName,
+              userStats.legends.selected.data[0].name,
+              userStats.legends.selected.data[0].value,
+              userStats.legends.selected.data[1].name,
+              userStats.legends.selected.data[1].value,
+              userStats.legends.selected.data[2].name,
+              userStats.legends.selected.data[2].value,
+              userStats.legends.selected.ImgAssets.icon
+            ),
+          },
+        });
+      }
+      if (options[0].name === "revenant") {
+        if (userStats.legends.all.Revenant.data) {
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: `${userStats.global.name}'s Revenant stats: `,
+              embeds: legendEmbedWithRank(
+                "Revenant",
+                userStats.legends.all.Revenant.data[0].name,
+                userStats.legends.all.Revenant.data[0].value,
+                userStats.legends.all.Revenant.data[0].rank.rankPos,
+                userStats.legends.all.Revenant.data[0].rank.topPercent,
+                userStats.legends.all.Revenant.data[1].name,
+                userStats.legends.all.Revenant.data[1].value,
+                userStats.legends.all.Revenant.data[1].rank.rankPos,
+                userStats.legends.all.Revenant.data[1].rank.topPercent,
+                userStats.legends.all.Revenant.data[2].name,
+                userStats.legends.all.Revenant.data[2].value,
+                userStats.legends.all.Revenant.data[2].rank.rankPos,
+                userStats.legends.all.Revenant.data[2].rank.topPercent,
+                userStats.legends.all.Revenant.ImgAssets.icon
+              ),
+            },
+          });
+        }
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `Data unavailable. Select character in game to generate data.`,
           },
         });
       }
