@@ -71,6 +71,16 @@ export const GET_PLAYER_LEGEND_STATS_COMMAND = {
       description: "Stats for Revenant",
       type: 1,
     },
+    {
+      name: "crypto",
+      description: "Stats for Crypto",
+      type: 1,
+    },
+    {
+      name: "horizon",
+      description: "Stats for Horizon",
+      type: 1,
+    },
   ],
   type: 1,
 };

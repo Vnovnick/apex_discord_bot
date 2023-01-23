@@ -160,6 +160,70 @@ app.post("/interactions", async function (req, res) {
           },
         });
       }
+      if (options[0].name === "crypto") {
+        if (userStats.legends.all.Crypto.data) {
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: `${userStats.global.name}'s Crypto stats: `,
+              embeds: legendEmbedWithRank(
+                "Crypto",
+                userStats.legends.all.Crypto.data[0].name,
+                userStats.legends.all.Crypto.data[0].value,
+                userStats.legends.all.Crypto.data[0].rank.rankPos,
+                userStats.legends.all.Crypto.data[0].rank.topPercent,
+                userStats.legends.all.Crypto.data[1].name,
+                userStats.legends.all.Crypto.data[1].value,
+                userStats.legends.all.Crypto.data[1].rank.rankPos,
+                userStats.legends.all.Crypto.data[1].rank.topPercent,
+                userStats.legends.all.Crypto.data[2].name,
+                userStats.legends.all.Crypto.data[2].value,
+                userStats.legends.all.Crypto.data[2].rank.rankPos,
+                userStats.legends.all.Crypto.data[2].rank.topPercent,
+                userStats.legends.all.Crypto.ImgAssets.icon
+              ),
+            },
+          });
+        }
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `Data unavailable. Select character in game to generate data.`,
+          },
+        });
+      }
+      if (options[0].name === "horizon") {
+        if (userStats.legends.all.Horizon.data) {
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: `${userStats.global.name}'s Horizon stats: `,
+              embeds: legendEmbedWithRank(
+                "Horizon",
+                userStats.legends.all.Horizon.data[0].name,
+                userStats.legends.all.Horizon.data[0].value,
+                userStats.legends.all.Horizon.data[0].rank.rankPos,
+                userStats.legends.all.Horizon.data[0].rank.topPercent,
+                userStats.legends.all.Horizon.data[1].name,
+                userStats.legends.all.Horizon.data[1].value,
+                userStats.legends.all.Horizon.data[1].rank.rankPos,
+                userStats.legends.all.Horizon.data[1].rank.topPercent,
+                userStats.legends.all.Horizon.data[2].name,
+                userStats.legends.all.Horizon.data[2].value,
+                userStats.legends.all.Horizon.data[2].rank.rankPos,
+                userStats.legends.all.Horizon.data[2].rank.topPercent,
+                userStats.legends.all.Horizon.ImgAssets.icon
+              ),
+            },
+          });
+        }
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `Data unavailable. Select character in game to generate data.`,
+          },
+        });
+      }
     }
   }
 });
