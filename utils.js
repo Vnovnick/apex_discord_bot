@@ -149,3 +149,15 @@ export const legendEmbedWithRank = (
   ];
   return embed;
 };
+
+export const legendMissingData = (legendName, imgUrl) => {
+  const embed = [
+    {
+      // title: legendName,
+      image: {
+        url: imgUrl,
+      },
+    },
+  ];
+  return embed;
+};

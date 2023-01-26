@@ -6,6 +6,7 @@ import {
   setEmbedColor,
   legendEmbed,
   legendEmbedWithRank,
+  legendMissingData,
 } from "./utils.js";
 import {
   HasGuildCommands,
@@ -156,7 +157,7 @@ app.post("/interactions", async function (req, res) {
         return res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
-            content: `Data unavailable. Select character in game to generate data.`,
+            content: `Data unavailable. Select Revenant in game to generate data.`,
           },
         });
       }
@@ -188,7 +189,7 @@ app.post("/interactions", async function (req, res) {
         return res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
-            content: `Data unavailable. Select character in game to generate data.`,
+            content: `Data unavailable. Select Crypto in game to generate data.`,
           },
         });
       }
@@ -220,7 +221,552 @@ app.post("/interactions", async function (req, res) {
         return res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
-            content: `Data unavailable. Select character in game to generate data.`,
+            content: `Data unavailable. Select Horizon in game to generate data.`,
+          },
+        });
+      }
+      if (options[0].name === "wattson") {
+        if (userStats.legends.all.Wattson.data) {
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: `${userStats.global.name}'s Wattson stats: `,
+              embeds: legendEmbedWithRank(
+                "Wattson",
+                userStats.legends.all.Wattson.data[0].name,
+                userStats.legends.all.Wattson.data[0].value,
+                userStats.legends.all.Wattson.data[0].rank.rankPos,
+                userStats.legends.all.Wattson.data[0].rank.topPercent,
+                userStats.legends.all.Wattson.data[1].name,
+                userStats.legends.all.Wattson.data[1].value,
+                userStats.legends.all.Wattson.data[1].rank.rankPos,
+                userStats.legends.all.Wattson.data[1].rank.topPercent,
+                userStats.legends.all.Wattson.data[2].name,
+                userStats.legends.all.Wattson.data[2].value,
+                userStats.legends.all.Wattson.data[2].rank.rankPos,
+                userStats.legends.all.Wattson.data[2].rank.topPercent,
+                userStats.legends.all.Wattson.ImgAssets.icon
+              ),
+            },
+          });
+        }
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `Data unavailable. Select Wattson in game to generate data.`,
+          },
+        });
+      }
+      if (options[0].name === "fuse") {
+        if (userStats.legends.all.Fuse.data) {
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: `${userStats.global.name}'s Fuse stats: `,
+              embeds: legendEmbedWithRank(
+                "Fuse",
+                userStats.legends.all.Fuse.data[0].name,
+                userStats.legends.all.Fuse.data[0].value,
+                userStats.legends.all.Fuse.data[0].rank.rankPos,
+                userStats.legends.all.Fuse.data[0].rank.topPercent,
+                userStats.legends.all.Fuse.data[1].name,
+                userStats.legends.all.Fuse.data[1].value,
+                userStats.legends.all.Fuse.data[1].rank.rankPos,
+                userStats.legends.all.Fuse.data[1].rank.topPercent,
+                userStats.legends.all.Fuse.data[2].name,
+                userStats.legends.all.Fuse.data[2].value,
+                userStats.legends.all.Fuse.data[2].rank.rankPos,
+                userStats.legends.all.Fuse.data[2].rank.topPercent,
+                userStats.legends.all.Fuse.ImgAssets.icon
+              ),
+            },
+          });
+        }
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `Data unavailable. Select Fuse in game to generate data.`,
+          },
+        });
+      }
+      if (options[0].name === "bangalore") {
+        if (userStats.legends.all.Bangalore.data) {
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: `${userStats.global.name}'s Bangalore stats: `,
+              embeds: legendEmbedWithRank(
+                "Bangalore",
+                userStats.legends.all.Bangalore.data[0].name,
+                userStats.legends.all.Bangalore.data[0].value,
+                userStats.legends.all.Bangalore.data[0].rank.rankPos,
+                userStats.legends.all.Bangalore.data[0].rank.topPercent,
+                userStats.legends.all.Bangalore.data[1].name,
+                userStats.legends.all.Bangalore.data[1].value,
+                userStats.legends.all.Bangalore.data[1].rank.rankPos,
+                userStats.legends.all.Bangalore.data[1].rank.topPercent,
+                userStats.legends.all.Bangalore.data[2].name,
+                userStats.legends.all.Bangalore.data[2].value,
+                userStats.legends.all.Bangalore.data[2].rank.rankPos,
+                userStats.legends.all.Bangalore.data[2].rank.topPercent,
+                userStats.legends.all.Bangalore.ImgAssets.icon
+              ),
+            },
+          });
+        }
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `Data unavailable. Select Bangalore in game to generate data.`,
+          },
+        });
+      }
+      if (options[0].name === "gibraltar") {
+        if (userStats.legends.all.Gibraltar.data) {
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: `${userStats.global.name}'s Gibraltar stats: `,
+              embeds: legendEmbedWithRank(
+                "Gibraltar",
+                userStats.legends.all.Gibraltar.data[0].name,
+                userStats.legends.all.Gibraltar.data[0].value,
+                userStats.legends.all.Gibraltar.data[0].rank.rankPos,
+                userStats.legends.all.Gibraltar.data[0].rank.topPercent,
+                userStats.legends.all.Gibraltar.data[1].name,
+                userStats.legends.all.Gibraltar.data[1].value,
+                userStats.legends.all.Gibraltar.data[1].rank.rankPos,
+                userStats.legends.all.Gibraltar.data[1].rank.topPercent,
+                userStats.legends.all.Gibraltar.data[2].name,
+                userStats.legends.all.Gibraltar.data[2].value,
+                userStats.legends.all.Gibraltar.data[2].rank.rankPos,
+                userStats.legends.all.Gibraltar.data[2].rank.topPercent,
+                userStats.legends.all.Gibraltar.ImgAssets.icon
+              ),
+            },
+          });
+        }
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `Data unavailable. Select Gibraltar in game to generate data.`,
+          },
+        });
+      }
+      if (options[0].name === "wraith") {
+        if (userStats.legends.all.Wraith.data) {
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: `${userStats.global.name}'s Wraith stats: `,
+              embeds: legendEmbedWithRank(
+                "Wraith",
+                userStats.legends.all.Wraith.data[0].name,
+                userStats.legends.all.Wraith.data[0].value,
+                userStats.legends.all.Wraith.data[0].rank.rankPos,
+                userStats.legends.all.Wraith.data[0].rank.topPercent,
+                userStats.legends.all.Wraith.data[1].name,
+                userStats.legends.all.Wraith.data[1].value,
+                userStats.legends.all.Wraith.data[1].rank.rankPos,
+                userStats.legends.all.Wraith.data[1].rank.topPercent,
+                userStats.legends.all.Wraith.data[2].name,
+                userStats.legends.all.Wraith.data[2].value,
+                userStats.legends.all.Wraith.data[2].rank.rankPos,
+                userStats.legends.all.Wraith.data[2].rank.topPercent,
+                userStats.legends.all.Wraith.ImgAssets.icon
+              ),
+            },
+          });
+        }
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `Data unavailable. Select Wraith in game to generate data.`,
+          },
+        });
+      }
+      if (options[0].name === "octane") {
+        if (userStats.legends.all.Octane.data) {
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: `${userStats.global.name}'s Octane stats: `,
+              embeds: legendEmbedWithRank(
+                "Octane",
+                userStats.legends.all.Octane.data[0].name,
+                userStats.legends.all.Octane.data[0].value,
+                userStats.legends.all.Octane.data[0].rank.rankPos,
+                userStats.legends.all.Octane.data[0].rank.topPercent,
+                userStats.legends.all.Octane.data[1].name,
+                userStats.legends.all.Octane.data[1].value,
+                userStats.legends.all.Octane.data[1].rank.rankPos,
+                userStats.legends.all.Octane.data[1].rank.topPercent,
+                userStats.legends.all.Octane.data[2].name,
+                userStats.legends.all.Octane.data[2].value,
+                userStats.legends.all.Octane.data[2].rank.rankPos,
+                userStats.legends.all.Octane.data[2].rank.topPercent,
+                userStats.legends.all.Octane.ImgAssets.icon
+              ),
+            },
+          });
+        }
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `Data unavailable. Select Octane in game to generate data.`,
+          },
+        });
+      }
+      if (options[0].name === "bloodhound") {
+        if (userStats.legends.all.Bloodhound.data) {
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: `${userStats.global.name}'s Bloodhound stats: `,
+              embeds: legendEmbedWithRank(
+                "Bloodhound",
+                userStats.legends.all.Bloodhound.data[0].name,
+                userStats.legends.all.Bloodhound.data[0].value,
+                userStats.legends.all.Bloodhound.data[0].rank.rankPos,
+                userStats.legends.all.Bloodhound.data[0].rank.topPercent,
+                userStats.legends.all.Bloodhound.data[1].name,
+                userStats.legends.all.Bloodhound.data[1].value,
+                userStats.legends.all.Bloodhound.data[1].rank.rankPos,
+                userStats.legends.all.Bloodhound.data[1].rank.topPercent,
+                userStats.legends.all.Bloodhound.data[2].name,
+                userStats.legends.all.Bloodhound.data[2].value,
+                userStats.legends.all.Bloodhound.data[2].rank.rankPos,
+                userStats.legends.all.Bloodhound.data[2].rank.topPercent,
+                userStats.legends.all.Bloodhound.ImgAssets.icon
+              ),
+            },
+          });
+        }
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `Data unavailable. Select Bloodhound in game to generate data.`,
+          },
+        });
+      }
+      if (options[0].name === "caustic") {
+        if (userStats.legends.all.Caustic.data) {
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: `${userStats.global.name}'s Caustic stats: `,
+              embeds: legendEmbedWithRank(
+                "Caustic",
+                userStats.legends.all.Caustic.data[0].name,
+                userStats.legends.all.Caustic.data[0].value,
+                userStats.legends.all.Caustic.data[0].rank.rankPos,
+                userStats.legends.all.Caustic.data[0].rank.topPercent,
+                userStats.legends.all.Caustic.data[1].name,
+                userStats.legends.all.Caustic.data[1].value,
+                userStats.legends.all.Caustic.data[1].rank.rankPos,
+                userStats.legends.all.Caustic.data[1].rank.topPercent,
+                userStats.legends.all.Caustic.data[2].name,
+                userStats.legends.all.Caustic.data[2].value,
+                userStats.legends.all.Caustic.data[2].rank.rankPos,
+                userStats.legends.all.Caustic.data[2].rank.topPercent,
+                userStats.legends.all.Caustic.ImgAssets.icon
+              ),
+            },
+          });
+        }
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `Data unavailable. Select Caustic in game to generate data.`,
+          },
+        });
+      }
+      if (options[0].name === "lifeline") {
+        if (userStats.legends.all.Lifeline.data) {
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: `${userStats.global.name}'s Lifeline stats: `,
+              embeds: legendEmbedWithRank(
+                "Lifeline",
+                userStats.legends.all.Lifeline.data[0].name,
+                userStats.legends.all.Lifeline.data[0].value,
+                userStats.legends.all.Lifeline.data[0].rank.rankPos,
+                userStats.legends.all.Lifeline.data[0].rank.topPercent,
+                userStats.legends.all.Lifeline.data[1].name,
+                userStats.legends.all.Lifeline.data[1].value,
+                userStats.legends.all.Lifeline.data[1].rank.rankPos,
+                userStats.legends.all.Lifeline.data[1].rank.topPercent,
+                userStats.legends.all.Lifeline.data[2].name,
+                userStats.legends.all.Lifeline.data[2].value,
+                userStats.legends.all.Lifeline.data[2].rank.rankPos,
+                userStats.legends.all.Lifeline.data[2].rank.topPercent,
+                userStats.legends.all.Lifeline.ImgAssets.icon
+              ),
+            },
+          });
+        }
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `Data unavailable. Select Lifeline in game to generate data.`,
+          },
+        });
+      }
+      if (options[0].name === "pathfinder") {
+        if (userStats.legends.all.Pathfinder.data) {
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: `${userStats.global.name}'s Pathfinder stats: `,
+              embeds: legendEmbedWithRank(
+                "Pathfinder",
+                userStats.legends.all.Pathfinder.data[0].name,
+                userStats.legends.all.Pathfinder.data[0].value,
+                userStats.legends.all.Pathfinder.data[0].rank.rankPos,
+                userStats.legends.all.Pathfinder.data[0].rank.topPercent,
+                userStats.legends.all.Pathfinder.data[1].name,
+                userStats.legends.all.Pathfinder.data[1].value,
+                userStats.legends.all.Pathfinder.data[1].rank.rankPos,
+                userStats.legends.all.Pathfinder.data[1].rank.topPercent,
+                userStats.legends.all.Pathfinder.data[2].name,
+                userStats.legends.all.Pathfinder.data[2].value,
+                userStats.legends.all.Pathfinder.data[2].rank.rankPos,
+                userStats.legends.all.Pathfinder.data[2].rank.topPercent,
+                userStats.legends.all.Pathfinder.ImgAssets.icon
+              ),
+            },
+          });
+        }
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `Data unavailable. Select Pathfinder in game to generate data.`,
+          },
+        });
+      }
+      if (options[0].name === "loba") {
+        if (userStats.legends.all.Loba.data) {
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: `${userStats.global.name}'s Loba stats: `,
+              embeds: legendEmbedWithRank(
+                "Loba",
+                userStats.legends.all.Loba.data[0].name,
+                userStats.legends.all.Loba.data[0].value,
+                userStats.legends.all.Loba.data[0].rank.rankPos,
+                userStats.legends.all.Loba.data[0].rank.topPercent,
+                userStats.legends.all.Loba.data[1].name,
+                userStats.legends.all.Loba.data[1].value,
+                userStats.legends.all.Loba.data[1].rank.rankPos,
+                userStats.legends.all.Loba.data[1].rank.topPercent,
+                userStats.legends.all.Loba.data[2].name,
+                userStats.legends.all.Loba.data[2].value,
+                userStats.legends.all.Loba.data[2].rank.rankPos,
+                userStats.legends.all.Loba.data[2].rank.topPercent,
+                userStats.legends.all.Loba.ImgAssets.icon
+              ),
+            },
+          });
+        }
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `Data unavailable. Select Loba in game to generate data.`,
+          },
+        });
+      }
+      if (options[0].name === "mirage") {
+        if (userStats.legends.all.Mirage.data) {
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: `${userStats.global.name}'s Mirage stats: `,
+              embeds: legendEmbedWithRank(
+                "Mirage",
+                userStats.legends.all.Mirage.data[0].name,
+                userStats.legends.all.Mirage.data[0].value,
+                userStats.legends.all.Mirage.data[0].rank.rankPos,
+                userStats.legends.all.Mirage.data[0].rank.topPercent,
+                userStats.legends.all.Mirage.data[1].name,
+                userStats.legends.all.Mirage.data[1].value,
+                userStats.legends.all.Mirage.data[1].rank.rankPos,
+                userStats.legends.all.Mirage.data[1].rank.topPercent,
+                userStats.legends.all.Mirage.data[2].name,
+                userStats.legends.all.Mirage.data[2].value,
+                userStats.legends.all.Mirage.data[2].rank.rankPos,
+                userStats.legends.all.Mirage.data[2].rank.topPercent,
+                userStats.legends.all.Mirage.ImgAssets.icon
+              ),
+            },
+          });
+        }
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `Data unavailable. Select Mirage in game to generate data.`,
+          },
+        });
+      }
+      if (options[0].name === "rampart") {
+        if (userStats.legends.all.Rampart.data) {
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: `${userStats.global.name}'s Rampart stats: `,
+              embeds: legendEmbedWithRank(
+                "Rampart",
+                userStats.legends.all.Rampart.data[0].name,
+                userStats.legends.all.Rampart.data[0].value,
+                userStats.legends.all.Rampart.data[0].rank.rankPos,
+                userStats.legends.all.Rampart.data[0].rank.topPercent,
+                userStats.legends.all.Rampart.data[1].name,
+                userStats.legends.all.Rampart.data[1].value,
+                userStats.legends.all.Rampart.data[1].rank.rankPos,
+                userStats.legends.all.Rampart.data[1].rank.topPercent,
+                userStats.legends.all.Rampart.data[2].name,
+                userStats.legends.all.Rampart.data[2].value,
+                userStats.legends.all.Rampart.data[2].rank.rankPos,
+                userStats.legends.all.Rampart.data[2].rank.topPercent,
+                userStats.legends.all.Rampart.ImgAssets.icon
+              ),
+            },
+          });
+        }
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `Data unavailable. Select Rampart in game to generate data.`,
+          },
+        });
+      }
+      if (options[0].name === "valkyrie") {
+        if (userStats.legends.all.Valkyrie.data) {
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: `${userStats.global.name}'s Valkyrie stats: `,
+              embeds: legendEmbedWithRank(
+                "Valkyrie",
+                userStats.legends.all.Valkyrie.data[0].name,
+                userStats.legends.all.Valkyrie.data[0].value,
+                userStats.legends.all.Valkyrie.data[0].rank.rankPos,
+                userStats.legends.all.Valkyrie.data[0].rank.topPercent,
+                userStats.legends.all.Valkyrie.data[1].name,
+                userStats.legends.all.Valkyrie.data[1].value,
+                userStats.legends.all.Valkyrie.data[1].rank.rankPos,
+                userStats.legends.all.Valkyrie.data[1].rank.topPercent,
+                userStats.legends.all.Valkyrie.data[2].name,
+                userStats.legends.all.Valkyrie.data[2].value,
+                userStats.legends.all.Valkyrie.data[2].rank.rankPos,
+                userStats.legends.all.Valkyrie.data[2].rank.topPercent,
+                userStats.legends.all.Valkyrie.ImgAssets.icon
+              ),
+            },
+          });
+        }
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `Data unavailable. Select Valkyrie in game to generate data.`,
+          },
+        });
+      }
+      if (options[0].name === "seer") {
+        if (userStats.legends.all.Seer.data) {
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: `${userStats.global.name}'s Seer stats: `,
+              embeds: legendEmbedWithRank(
+                "Seer",
+                userStats.legends.all.Seer.data[0].name,
+                userStats.legends.all.Seer.data[0].value,
+                userStats.legends.all.Seer.data[0].rank.rankPos,
+                userStats.legends.all.Seer.data[0].rank.topPercent,
+                userStats.legends.all.Seer.data[1].name,
+                userStats.legends.all.Seer.data[1].value,
+                userStats.legends.all.Seer.data[1].rank.rankPos,
+                userStats.legends.all.Seer.data[1].rank.topPercent,
+                userStats.legends.all.Seer.data[2].name,
+                userStats.legends.all.Seer.data[2].value,
+                userStats.legends.all.Seer.data[2].rank.rankPos,
+                userStats.legends.all.Seer.data[2].rank.topPercent,
+                userStats.legends.all.Seer.ImgAssets.icon
+              ),
+            },
+          });
+        }
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `Data unavailable. Select Seer in game to generate data.`,
+          },
+        });
+      }
+      if (options[0].name === "ash") {
+        if (userStats.legends.all.Ash.data) {
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: `${userStats.global.name}'s Ash stats: `,
+              embeds: legendEmbedWithRank(
+                "Ash",
+                userStats.legends.all.Ash.data[0].name,
+                userStats.legends.all.Ash.data[0].value,
+                userStats.legends.all.Ash.data[0].rank.rankPos,
+                userStats.legends.all.Ash.data[0].rank.topPercent,
+                userStats.legends.all.Ash.data[1].name,
+                userStats.legends.all.Ash.data[1].value,
+                userStats.legends.all.Ash.data[1].rank.rankPos,
+                userStats.legends.all.Ash.data[1].rank.topPercent,
+                userStats.legends.all.Ash.data[2].name,
+                userStats.legends.all.Ash.data[2].value,
+                userStats.legends.all.Ash.data[2].rank.rankPos,
+                userStats.legends.all.Ash.data[2].rank.topPercent,
+                userStats.legends.all.Ash.ImgAssets.icon
+              ),
+            },
+          });
+        }
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `Data unavailable. Select Ash in game to generate data.`,
+          },
+        });
+      }
+      // image file had space in "mad maggie.png" so it would throw an error
+      if (options[0].name === "madmaggie") {
+        if (userStats.legends.all["Mad Maggie"].data) {
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: `${userStats.global.name}'s Mad Maggie stats: `,
+              embeds: legendEmbedWithRank(
+                "Mad Maggie",
+                userStats.legends.all["Mad Maggie"].data[0].name,
+                userStats.legends.all["Mad Maggie"].data[0].value,
+                userStats.legends.all["Mad Maggie"].data[0].rank.rankPos,
+                userStats.legends.all["Mad Maggie"].data[0].rank.topPercent,
+                userStats.legends.all["Mad Maggie"].data[1].name,
+                userStats.legends.all["Mad Maggie"].data[1].value,
+                userStats.legends.all["Mad Maggie"].data[1].rank.rankPos,
+                userStats.legends.all["Mad Maggie"].data[1].rank.topPercent,
+                userStats.legends.all["Mad Maggie"].data[2].name,
+                userStats.legends.all["Mad Maggie"].data[2].value,
+                userStats.legends.all["Mad Maggie"].data[2].rank.rankPos,
+                userStats.legends.all["Mad Maggie"].data[2].rank.topPercent,
+                "https://api.mozambiquehe.re//assets//icons//mad%20maggie.png"
+              ),
+            },
+          });
+        }
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `Data unavailable. Select Mad Maggie in game to generate data.`,
           },
         });
       }

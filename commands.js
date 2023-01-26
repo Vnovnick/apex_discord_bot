@@ -81,6 +81,91 @@ export const GET_PLAYER_LEGEND_STATS_COMMAND = {
       description: "Stats for Horizon",
       type: 1,
     },
+    {
+      name: "wattson",
+      description: "Stats for Wattson",
+      type: 1,
+    },
+    {
+      name: "fuse",
+      description: "Stats for Fuse",
+      type: 1,
+    },
+    {
+      name: "bangalore",
+      description: "Stats for Bangalore",
+      type: 1,
+    },
+    {
+      name: "gibraltar",
+      description: "Stats for Gibraltar",
+      type: 1,
+    },
+    {
+      name: "wraith",
+      description: "Stats for Wraith",
+      type: 1,
+    },
+    {
+      name: "octane",
+      description: "Stats for Octane",
+      type: 1,
+    },
+    {
+      name: "bloodhound",
+      description: "Stats for Bloodhound",
+      type: 1,
+    },
+    {
+      name: "caustic",
+      description: "Stats for Caustic",
+      type: 1,
+    },
+    {
+      name: "lifeline",
+      description: "Stats for Lifeline",
+      type: 1,
+    },
+    {
+      name: "pathfinder",
+      description: "Stats for Pathfinder",
+      type: 1,
+    },
+    {
+      name: "loba",
+      description: "Stats for Loba",
+      type: 1,
+    },
+    {
+      name: "mirage",
+      description: "Stats for Mirage",
+      type: 1,
+    },
+    {
+      name: "rampart",
+      description: "Stats for Rampart",
+      type: 1,
+    },
+    {
+      name: "valkyrie",
+      description: "Stats for Valkyrie",
+      type: 1,
+    },
+    {
+      name: "seer",
+      description: "Stats for Seer",
+      type: 1,
+    },
+    {
+      name: "ash",
+      description: "Stats for Ash",
+      type: 1,
+    },
+    {
+      name: "madmaggie",
+      description: "Stats for Mad Maggie",
+      type: 1,
+    },
   ],
   type: 1,
 };
