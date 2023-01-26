@@ -770,6 +770,102 @@ app.post("/interactions", async function (req, res) {
           },
         });
       }
+      if (options[0].name === "newcastle") {
+        if (userStats.legends.all.Newcastle.data) {
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: `${userStats.global.name}'s Newcastle stats: `,
+              embeds: legendEmbedWithRank(
+                "Newcastle",
+                userStats.legends.all.Newcastle.data[0].name,
+                userStats.legends.all.Newcastle.data[0].value,
+                userStats.legends.all.Newcastle.data[0].rank.rankPos,
+                userStats.legends.all.Newcastle.data[0].rank.topPercent,
+                userStats.legends.all.Newcastle.data[1].name,
+                userStats.legends.all.Newcastle.data[1].value,
+                userStats.legends.all.Newcastle.data[1].rank.rankPos,
+                userStats.legends.all.Newcastle.data[1].rank.topPercent,
+                userStats.legends.all.Newcastle.data[2].name,
+                userStats.legends.all.Newcastle.data[2].value,
+                userStats.legends.all.Newcastle.data[2].rank.rankPos,
+                userStats.legends.all.Newcastle.data[2].rank.topPercent,
+                userStats.legends.all.Newcastle.ImgAssets.icon
+              ),
+            },
+          });
+        }
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `Data unavailable. Select Newcastle in game to generate data.`,
+          },
+        });
+      }
+      if (options[0].name === "vantage") {
+        if (userStats.legends.all.Vantage.data) {
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: `${userStats.global.name}'s Vantage stats: `,
+              embeds: legendEmbedWithRank(
+                "Vantage",
+                userStats.legends.all.Vantage.data[0].name,
+                userStats.legends.all.Vantage.data[0].value,
+                userStats.legends.all.Vantage.data[0].rank.rankPos,
+                userStats.legends.all.Vantage.data[0].rank.topPercent,
+                userStats.legends.all.Vantage.data[1].name,
+                userStats.legends.all.Vantage.data[1].value,
+                userStats.legends.all.Vantage.data[1].rank.rankPos,
+                userStats.legends.all.Vantage.data[1].rank.topPercent,
+                userStats.legends.all.Vantage.data[2].name,
+                userStats.legends.all.Vantage.data[2].value,
+                userStats.legends.all.Vantage.data[2].rank.rankPos,
+                userStats.legends.all.Vantage.data[2].rank.topPercent,
+                userStats.legends.all.Vantage.ImgAssets.icon
+              ),
+            },
+          });
+        }
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `Data unavailable. Select Newcastle in game to generate data.`,
+          },
+        });
+      }
+      if (options[0].name === "catalyst") {
+        if (userStats.legends.all.Catalyst.data) {
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: `${userStats.global.name}'s Catalyst stats: `,
+              embeds: legendEmbedWithRank(
+                "Catalyst",
+                userStats.legends.all.Catalyst.data[0].name,
+                userStats.legends.all.Catalyst.data[0].value,
+                userStats.legends.all.Catalyst.data[0].rank.rankPos,
+                userStats.legends.all.Catalyst.data[0].rank.topPercent,
+                userStats.legends.all.Catalyst.data[1].name,
+                userStats.legends.all.Catalyst.data[1].value,
+                userStats.legends.all.Catalyst.data[1].rank.rankPos,
+                userStats.legends.all.Catalyst.data[1].rank.topPercent,
+                userStats.legends.all.Catalyst.data[2].name,
+                userStats.legends.all.Catalyst.data[2].value,
+                userStats.legends.all.Catalyst.data[2].rank.rankPos,
+                userStats.legends.all.Catalyst.data[2].rank.topPercent,
+                userStats.legends.all.Catalyst.ImgAssets.icon
+              ),
+            },
+          });
+        }
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `Data unavailable. Select Catalyst in game to generate data.`,
+          },
+        });
+      }
     }
   }
 });

@@ -166,6 +166,21 @@ export const GET_PLAYER_LEGEND_STATS_COMMAND = {
       description: "Stats for Mad Maggie",
       type: 1,
     },
+    {
+      name: "newcastle",
+      description: "Stats for Newcastle",
+      type: 1,
+    },
+    {
+      name: "vantage",
+      description: "Stats for Vantage",
+      type: 1,
+    },
+    {
+      name: "catalyst",
+      description: "Stats for Catalyst",
+      type: 1,
+    },
   ],
   type: 1,
 };
