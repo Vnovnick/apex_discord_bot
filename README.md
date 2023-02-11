@@ -19,7 +19,7 @@
     - /mylegendstats "legendname"
   - Limitation: since the API only has data ready for most recently used legends, not all stats for legends are available. User must select the legend in game, or use them, to then see the stats with the /mylegendstats command
 
-- Get Latest Apex News Updates
+- Get Latest Apex News Updates (/news)
   - Two Subcommands:
     - /latest - gives the latest news update
     - /lastthree - gives the last three news updates (command name might be changed)
