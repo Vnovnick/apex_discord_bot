@@ -1,6 +1,11 @@
 import "dotenv/config";
 import fetch from "node-fetch";
 import { verifyKey } from "discord-interactions";
+import { InteractionResponseType } from "discord-interactions";
+
+export function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 export function VerifyDiscordRequest(clientKey) {
   return function (req, res, buf, encoding) {
@@ -72,11 +77,11 @@ export const legendEmbed = (
   const embed = [
     {
       fields: [
-        // {
-        //   name: "Legend: ",
-        //   value: legendName,
-        //   inline: false,
-        // },
+        {
+          name: "Legend: ",
+          value: legendName,
+          inline: false,
+        },
         {
           name: "First Tracker: ",
           value: `${firstTrack} - *${firstVal}*`,
@@ -160,4 +165,47 @@ export const legendMissingData = (legendName, imgUrl) => {
     },
   ];
   return embed;
+};
+
+export const setLegendImage = (legend, data) => {
+  if (legend === "Mad Maggie") {
+    return "https://api.mozambiquehe.re//assets//icons//mad%20maggie.png";
+  } else {
+    return data.legends.all[legend].ImgAssets.icon;
+  }
+};
+
+export const legendStatsSubCommand = (legend, statData, response) => {
+  const capLegend = capitalizeFirstLetter(legend);
+
+  if (statData.legends.all[capLegend].data) {
+    return response.send({
+      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+      data: {
+        content: `${statData.global.name}'s ${capLegend} stats: `,
+        embeds: legendEmbedWithRank(
+          capLegend,
+          statData.legends.all[capLegend].data[0].name,
+          statData.legends.all[capLegend].data[0].value,
+          statData.legends.all[capLegend].data[0].rank.rankPos,
+          statData.legends.all[capLegend].data[0].rank.topPercent,
+          statData.legends.all[capLegend].data[1].name,
+          statData.legends.all[capLegend].data[1].value,
+          statData.legends.all[capLegend].data[1].rank.rankPos,
+          statData.legends.all[capLegend].data[1].rank.topPercent,
+          statData.legends.all[capLegend].data[2].name,
+          statData.legends.all[capLegend].data[2].value,
+          statData.legends.all[capLegend].data[2].rank.rankPos,
+          statData.legends.all[capLegend].data[2].rank.topPercent,
+          setLegendImage(capLegend, statData)
+        ),
+      },
+    });
+  }
+  return response.send({
+    type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+    data: {
+      content: `Data unavailable. Select ${capLegend} in game to generate data.`,
+    },
+  });
 };
