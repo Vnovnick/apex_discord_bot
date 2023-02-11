@@ -56,7 +56,15 @@ export const GET_PLAYER_INFO_COMMAND = {
   description: "Gets a snapshot of player info and rank",
   type: 1,
 };
-
+export const GET_APEX_NEWS_COMMAND = {
+  name: "news",
+  description: "Gets latest Apex news updates",
+  options: [
+    { name: "latest", description: "Most Recent News Update", type: 1 },
+    { name: "lastthree", description: "Last Three News Updates", type: 1 },
+  ],
+  type: 1,
+};
 export const GET_PLAYER_LEGEND_STATS_COMMAND = {
   name: "mylegendstats",
   description: "Get your legend stats",

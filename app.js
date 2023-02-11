@@ -5,7 +5,6 @@ import {
   VerifyDiscordRequest,
   setEmbedColor,
   legendEmbed,
-  legendEmbedWithRank,
   legendStatsSubCommand,
 } from "./utils.js";
 import {
@@ -13,6 +12,7 @@ import {
   TEST_COMMAND,
   GET_PLAYER_INFO_COMMAND,
   GET_PLAYER_LEGEND_STATS_COMMAND,
+  GET_APEX_NEWS_COMMAND,
 } from "./commands.js";
 import axios from "axios";
 
@@ -56,6 +56,67 @@ app.post("/interactions", async function (req, res) {
           content: "__this is a test don't panic__",
         },
       });
+    }
+    if (name === "news") {
+      const getNews = async () => {
+        const response = await axios
+          .get(
+            `https://api.mozambiquehe.re/news?auth=e31142840b23b46cc82ad64cdbbdb1ef`
+          )
+          .catch((err) => console.log(err));
+        return response.data;
+      };
+      let apexNews = await getNews();
+      if (options[0].name === "latest") {
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            embeds: [
+              {
+                title: apexNews[0].title,
+                description: apexNews[0].short_desc,
+                url: apexNews[0].link,
+                image: {
+                  url: apexNews[0].img,
+                },
+              },
+            ],
+          },
+        });
+      }
+      if (options[0].name === "lastthree") {
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            embeds: [
+              {
+                title: apexNews[0].title,
+                description: apexNews[0].short_desc,
+                url: apexNews[0].link,
+                image: {
+                  url: apexNews[0].img,
+                },
+              },
+              {
+                title: apexNews[1].title,
+                description: apexNews[1].short_desc,
+                url: apexNews[1].link,
+                image: {
+                  url: apexNews[1].img,
+                },
+              },
+              {
+                title: apexNews[2].title,
+                description: apexNews[2].short_desc,
+                url: apexNews[2].link,
+                image: {
+                  url: apexNews[2].img,
+                },
+              },
+            ],
+          },
+        });
+      }
     }
     if (name === "myinfo") {
       const getStats = async () => {
@@ -211,5 +272,6 @@ app.listen(PORT, () => {
     TEST_COMMAND,
     GET_PLAYER_INFO_COMMAND,
     GET_PLAYER_LEGEND_STATS_COMMAND,
+    GET_APEX_NEWS_COMMAND,
   ]);
 });
