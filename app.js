@@ -36,10 +36,9 @@ app.post("/interactions", async function (req, res) {
 
   // handles any slash commands receieved
   if (type === InteractionType.APPLICATION_COMMAND) {
-    const { user } = member;
+    const { user, nick } = member;
     const { name, options } = data;
     console.log(options);
-
     // "test" guild command
     if (name === "test") {
       // Send a message into the channel where command was triggered from
@@ -119,47 +118,64 @@ app.post("/interactions", async function (req, res) {
       }
     }
     if (name === "myinfo") {
+      console.log(nick);
       const getStats = async () => {
         const response = await axios
           .get(
-            `https://api.mozambiquehe.re/bridge?auth=e31142840b23b46cc82ad64cdbbdb1ef&player=${user.username}&platform=PC`
+            `https://api.mozambiquehe.re/bridge?auth=e31142840b23b46cc82ad64cdbbdb1ef&player=${nick}&platform=PC`
           )
-          .catch((err) => console.log(err));
-        const userData = response.data.global;
-        return userData;
+          .catch((err) => {
+            console.log(err);
+          });
+        if (response) {
+          const userData = response.data.global;
+          return userData;
+        } else {
+          return;
+        }
       };
       let userStats = await getStats();
-      return res.send({
-        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-        data: {
-          content: `${userStats.name}'s info: `,
-          embeds: [
-            {
-              fields: [
-                {
-                  name: "Platform: ",
-                  value: userStats.platform,
-                  inline: false,
+      if (userStats) {
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `${userStats.name}'s info: `,
+            embeds: [
+              {
+                fields: [
+                  {
+                    name: "Platform: ",
+                    value: userStats.platform,
+                    inline: false,
+                  },
+                  {
+                    name: "Level:",
+                    value: `${userStats.level} - *Prestige ${userStats.levelPrestige}*`,
+                    inline: false,
+                  },
+                  {
+                    name: "Current BR Rank:",
+                    value: `${userStats.rank.rankName} ${userStats.rank.rankDiv}\nRP: ${userStats.rank.rankScore}\n`,
+                    inline: false,
+                  },
+                ],
+                thumbnail: {
+                  url: userStats.rank.rankImg,
                 },
-                {
-                  name: "Level:",
-                  value: `${userStats.level} - *Prestige ${userStats.levelPrestige}*`,
-                  inline: false,
-                },
-                {
-                  name: "Current BR Rank:",
-                  value: `${userStats.rank.rankName} ${userStats.rank.rankDiv}\nRP: ${userStats.rank.rankScore}\n`,
-                  inline: false,
-                },
-              ],
-              thumbnail: {
-                url: userStats.rank.rankImg,
+                color: setEmbedColor(userStats.rank.rankName),
               },
-              color: setEmbedColor(userStats.rank.rankName),
-            },
-          ],
-        },
-      });
+            ],
+          },
+        });
+      } else {
+        res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content:
+              "Command Failed. User Name or Server Nickname might be invalid",
+          },
+        });
+      }
     }
     if (name === "mylegendstats") {
       const getStats = async () => {
@@ -168,97 +184,111 @@ app.post("/interactions", async function (req, res) {
             `https://api.mozambiquehe.re/bridge?auth=e31142840b23b46cc82ad64cdbbdb1ef&player=${user.username}&platform=PC`
           )
           .catch((err) => console.log(err));
-        const userData = response.data;
-        return userData;
+        if (response) {
+          const userData = response.data;
+          return userData;
+        } else {
+          return;
+        }
       };
       let userStats = await getStats();
-      if (options[0].name === "selected") {
-        return res.send({
+      if (userStats) {
+        if (options[0].name === "selected") {
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: `${userStats.global.name}'s selected legend stats: `,
+              embeds: legendEmbed(
+                userStats.legends.selected.LegendName,
+                userStats.legends.selected.data[0].name,
+                userStats.legends.selected.data[0].value,
+                userStats.legends.selected.data[1].name,
+                userStats.legends.selected.data[1].value,
+                userStats.legends.selected.data[2].name,
+                userStats.legends.selected.data[2].value,
+                userStats.legends.selected.ImgAssets.icon
+              ),
+            },
+          });
+        }
+        if (options[0].name === "revenant") {
+          legendStatsSubCommand("revenant", userStats, res);
+        }
+        if (options[0].name === "crypto") {
+          legendStatsSubCommand("crypto", userStats, res);
+        }
+        if (options[0].name === "horizon") {
+          legendStatsSubCommand("horizon", userStats, res);
+        }
+        if (options[0].name === "wattson") {
+          legendStatsSubCommand("wattson", userStats, res);
+        }
+        if (options[0].name === "fuse") {
+          legendStatsSubCommand("fuse", userStats, res);
+        }
+        if (options[0].name === "bangalore") {
+          legendStatsSubCommand("bangalore", userStats, res);
+        }
+        if (options[0].name === "gibraltar") {
+          legendStatsSubCommand("gibraltar", userStats, res);
+        }
+        if (options[0].name === "wraith") {
+          legendStatsSubCommand("wraith", userStats, res);
+        }
+        if (options[0].name === "octane") {
+          legendStatsSubCommand("octane", userStats, res);
+        }
+        if (options[0].name === "bloodhound") {
+          legendStatsSubCommand("bloodhound", userStats, res);
+        }
+        if (options[0].name === "caustic") {
+          legendStatsSubCommand("caustic", userStats, res);
+        }
+        if (options[0].name === "lifeline") {
+          legendStatsSubCommand("lifeline", userStats, res);
+        }
+        if (options[0].name === "pathfinder") {
+          legendStatsSubCommand("pathfinder", userStats, res);
+        }
+        if (options[0].name === "loba") {
+          legendStatsSubCommand("loba", userStats, res);
+        }
+        if (options[0].name === "mirage") {
+          legendStatsSubCommand("mirage", userStats, res);
+        }
+        if (options[0].name === "rampart") {
+          legendStatsSubCommand("rampart", userStats, res);
+        }
+        if (options[0].name === "valkyrie") {
+          legendStatsSubCommand("valkyrie", userStats, res);
+        }
+        if (options[0].name === "seer") {
+          legendStatsSubCommand("seer", userStats, res);
+        }
+        if (options[0].name === "ash") {
+          legendStatsSubCommand("ash", userStats, res);
+        }
+        // image file had space in "mad maggie.png" so it would throw an error
+        if (options[0].name === "madmaggie") {
+          legendStatsSubCommand("Mad Maggie", userStats, res);
+        }
+        if (options[0].name === "newcastle") {
+          legendStatsSubCommand("newcastle", userStats, res);
+        }
+        if (options[0].name === "vantage") {
+          legendStatsSubCommand("vantage", userStats, res);
+        }
+        if (options[0].name === "catalyst") {
+          legendStatsSubCommand("catalyst", userStats, res);
+        }
+      } else {
+        res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
-            content: `${userStats.global.name}'s selected legend stats: `,
-            embeds: legendEmbed(
-              userStats.legends.selected.LegendName,
-              userStats.legends.selected.data[0].name,
-              userStats.legends.selected.data[0].value,
-              userStats.legends.selected.data[1].name,
-              userStats.legends.selected.data[1].value,
-              userStats.legends.selected.data[2].name,
-              userStats.legends.selected.data[2].value,
-              userStats.legends.selected.ImgAssets.icon
-            ),
+            content:
+              "Command Failed. User Name or Server Nickname might be invalid",
           },
         });
-      }
-      if (options[0].name === "revenant") {
-        legendStatsSubCommand("revenant", userStats, res);
-      }
-      if (options[0].name === "crypto") {
-        legendStatsSubCommand("crypto", userStats, res);
-      }
-      if (options[0].name === "horizon") {
-        legendStatsSubCommand("horizon", userStats, res);
-      }
-      if (options[0].name === "wattson") {
-        legendStatsSubCommand("wattson", userStats, res);
-      }
-      if (options[0].name === "fuse") {
-        legendStatsSubCommand("fuse", userStats, res);
-      }
-      if (options[0].name === "bangalore") {
-        legendStatsSubCommand("bangalore", userStats, res);
-      }
-      if (options[0].name === "gibraltar") {
-        legendStatsSubCommand("gibraltar", userStats, res);
-      }
-      if (options[0].name === "wraith") {
-        legendStatsSubCommand("wraith", userStats, res);
-      }
-      if (options[0].name === "octane") {
-        legendStatsSubCommand("octane", userStats, res);
-      }
-      if (options[0].name === "bloodhound") {
-        legendStatsSubCommand("bloodhound", userStats, res);
-      }
-      if (options[0].name === "caustic") {
-        legendStatsSubCommand("caustic", userStats, res);
-      }
-      if (options[0].name === "lifeline") {
-        legendStatsSubCommand("lifeline", userStats, res);
-      }
-      if (options[0].name === "pathfinder") {
-        legendStatsSubCommand("pathfinder", userStats, res);
-      }
-      if (options[0].name === "loba") {
-        legendStatsSubCommand("loba", userStats, res);
-      }
-      if (options[0].name === "mirage") {
-        legendStatsSubCommand("mirage", userStats, res);
-      }
-      if (options[0].name === "rampart") {
-        legendStatsSubCommand("rampart", userStats, res);
-      }
-      if (options[0].name === "valkyrie") {
-        legendStatsSubCommand("valkyrie", userStats, res);
-      }
-      if (options[0].name === "seer") {
-        legendStatsSubCommand("seer", userStats, res);
-      }
-      if (options[0].name === "ash") {
-        legendStatsSubCommand("ash", userStats, res);
-      }
-      // image file had space in "mad maggie.png" so it would throw an error
-      if (options[0].name === "madmaggie") {
-        legendStatsSubCommand("Mad Maggie", userStats, res);
-      }
-      if (options[0].name === "newcastle") {
-        legendStatsSubCommand("newcastle", userStats, res);
-      }
-      if (options[0].name === "vantage") {
-        legendStatsSubCommand("vantage", userStats, res);
-      }
-      if (options[0].name === "catalyst") {
-        legendStatsSubCommand("catalyst", userStats, res);
       }
     }
   }
