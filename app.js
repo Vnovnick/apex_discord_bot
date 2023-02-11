@@ -6,6 +6,7 @@ import {
   setEmbedColor,
   legendEmbed,
   legendStatsSubCommand,
+  checkUserName,
 } from "./utils.js";
 import {
   HasGuildCommands,
@@ -118,11 +119,11 @@ app.post("/interactions", async function (req, res) {
       }
     }
     if (name === "myinfo") {
-      console.log(nick);
+      const queryUserName = checkUserName(user, nick);
       const getStats = async () => {
         const response = await axios
           .get(
-            `https://api.mozambiquehe.re/bridge?auth=e31142840b23b46cc82ad64cdbbdb1ef&player=${nick}&platform=PC`
+            `https://api.mozambiquehe.re/bridge?auth=e31142840b23b46cc82ad64cdbbdb1ef&player=${queryUserName}&platform=PC`
           )
           .catch((err) => {
             console.log(err);
@@ -178,10 +179,11 @@ app.post("/interactions", async function (req, res) {
       }
     }
     if (name === "mylegendstats") {
+      const queryUserName = checkUserName(user, nick);
       const getStats = async () => {
         const response = await axios
           .get(
-            `https://api.mozambiquehe.re/bridge?auth=e31142840b23b46cc82ad64cdbbdb1ef&player=${user.username}&platform=PC`
+            `https://api.mozambiquehe.re/bridge?auth=e31142840b23b46cc82ad64cdbbdb1ef&player=${queryUserName}&platform=PC`
           )
           .catch((err) => console.log(err));
         if (response) {

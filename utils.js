@@ -7,6 +7,14 @@ export function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+export function checkUserName(userObject, nickName) {
+  if (nickName) {
+    return nickName;
+  } else {
+    return userObject.username;
+  }
+}
+
 export function VerifyDiscordRequest(clientKey) {
   return function (req, res, buf, encoding) {
     const signature = req.get("X-Signature-Ed25519");
