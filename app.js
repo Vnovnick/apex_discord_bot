@@ -14,6 +14,7 @@ import {
   GET_PLAYER_INFO_COMMAND,
   GET_PLAYER_LEGEND_STATS_COMMAND,
   GET_APEX_NEWS_COMMAND,
+  GET_MAP_ROTATION_COMMAND,
 } from "./commands.js";
 import axios from "axios";
 
@@ -61,12 +62,12 @@ app.post("/interactions", async function (req, res) {
       const getNews = async () => {
         const response = await axios
           .get(
-            `https://api.mozambiquehe.re/news?auth=e31142840b23b46cc82ad64cdbbdb1ef`
+            "https://api.mozambiquehe.re/news?auth=e31142840b23b46cc82ad64cdbbdb1ef"
           )
           .catch((err) => console.log(err));
         return response.data;
       };
-      let apexNews = await getNews();
+      const apexNews = await getNews();
       if (options[0].name === "latest") {
         return res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
@@ -118,6 +119,54 @@ app.post("/interactions", async function (req, res) {
         });
       }
     }
+    if (name === "maprotation") {
+      const getRotation = async () => {
+        const response = await axios
+          .get(
+            "https://api.mozambiquehe.re/maprotation?auth=e31142840b23b46cc82ad64cdbbdb1ef"
+          )
+          .catch((err) => console.log(err));
+        return response.data;
+      };
+      const rotationData = await getRotation();
+      if (rotationData) {
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            embeds: [
+              {
+                title: `Map Rotation: `,
+                fields: [
+                  {
+                    name: "Current Map: ",
+                    value: rotationData.current.map,
+                    inline: false,
+                  },
+                  {
+                    name: "Remaining Time for Current Map: ",
+                    value: `${rotationData.current.remainingMins} mins.`,
+                    inline: false,
+                  },
+                  {
+                    name: "Next Map: ",
+                    value: rotationData.next.map,
+                    inline: false,
+                  },
+                  {
+                    name: "Duration for Next Map: ",
+                    value: `${rotationData.next.DurationInMinutes} mins.`,
+                    inline: false,
+                  },
+                ],
+                image: {
+                  url: rotationData.current.asset,
+                },
+              },
+            ],
+          },
+        });
+      }
+    }
     if (name === "myinfo") {
       const queryUserName = checkUserName(user, nick);
       const getStats = async () => {
@@ -135,7 +184,7 @@ app.post("/interactions", async function (req, res) {
           return;
         }
       };
-      let userStats = await getStats();
+      const userStats = await getStats();
       if (userStats) {
         return res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
@@ -193,7 +242,7 @@ app.post("/interactions", async function (req, res) {
           return;
         }
       };
-      let userStats = await getStats();
+      const userStats = await getStats();
       if (userStats) {
         if (options[0].name === "selected") {
           return res.send({
@@ -305,5 +354,6 @@ app.listen(PORT, () => {
     GET_PLAYER_INFO_COMMAND,
     GET_PLAYER_LEGEND_STATS_COMMAND,
     GET_APEX_NEWS_COMMAND,
+    GET_MAP_ROTATION_COMMAND,
   ]);
 });

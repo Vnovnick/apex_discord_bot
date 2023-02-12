@@ -65,6 +65,11 @@ export const GET_APEX_NEWS_COMMAND = {
   ],
   type: 1,
 };
+export const GET_MAP_ROTATION_COMMAND = {
+  name: "maprotation",
+  description: "Gets the current map rotation",
+  type: 1,
+};
 export const GET_PLAYER_LEGEND_STATS_COMMAND = {
   name: "mylegendstats",
   description: "Get your legend stats",
