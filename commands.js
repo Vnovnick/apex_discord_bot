@@ -43,13 +43,6 @@ async function HasGuildCommand(appId, guildId, command) {
   }
 }
 
-// Simple test command
-export const TEST_COMMAND = {
-  name: "test",
-  description: "Basic guild command",
-  type: 1,
-};
-
 // apex bot commands
 export const GET_PLAYER_INFO_COMMAND = {
   name: "myinfo",
@@ -68,6 +61,12 @@ export const GET_APEX_NEWS_COMMAND = {
 export const GET_MAP_ROTATION_COMMAND = {
   name: "maprotation",
   description: "Gets the current map rotation",
+  type: 1,
+};
+export const GET_BOT_DESCRIPTION_COMMAND = {
+  name: "botdescription",
+  description:
+    "Gets a description of the bot and info on how to access certain commands.",
   type: 1,
 };
 export const GET_PLAYER_LEGEND_STATS_COMMAND = {

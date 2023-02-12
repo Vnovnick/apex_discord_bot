@@ -10,11 +10,11 @@ import {
 } from "./utils.js";
 import {
   HasGuildCommands,
-  TEST_COMMAND,
   GET_PLAYER_INFO_COMMAND,
   GET_PLAYER_LEGEND_STATS_COMMAND,
   GET_APEX_NEWS_COMMAND,
   GET_MAP_ROTATION_COMMAND,
+  GET_BOT_DESCRIPTION_COMMAND,
 } from "./commands.js";
 import axios from "axios";
 
@@ -41,20 +41,12 @@ app.post("/interactions", async function (req, res) {
     const { user, nick } = member;
     const { name, options } = data;
     console.log(options);
-    // "test" guild command
-    if (name === "test") {
-      // Send a message into the channel where command was triggered from
-      return res.send({
+    if (name === "botdescription") {
+      res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
-          embeds: [
-            {
-              fields: [],
-              title: "Test Embed",
-              description: "test embed",
-            },
-          ],
-          content: "__this is a test don't panic__",
+          content:
+            "I am a semi-sentient bot that can serve up some basic legend stats, your ranked info, the current map rotation, and the latest news updates from Respawn. Simply type a forward slash into the message box to see what I can do. \n\nIMPORTANT: I will only be able to retrieve player specific stats if your server profile nickname or Discord username match your Origin username (not Steam username). Simply change your server nickname to match your Origin username to be able to use the /myinfo and /mylegendstats commands if your current username doesn't match your Origin. \n\nSee the link below to learn how to change your Server nickname:\nhttps://support.discord.com/hc/en-us/articles/219070107-Server-Nicknames#:~:text=If%20you're%20on%20the,new%20nickname%20of%20your%20choice!",
         },
       });
     }
@@ -65,56 +57,70 @@ app.post("/interactions", async function (req, res) {
             "https://api.mozambiquehe.re/news?auth=e31142840b23b46cc82ad64cdbbdb1ef"
           )
           .catch((err) => console.log(err));
-        return response.data;
+        if (response) {
+          return response.data;
+        } else {
+          return;
+        }
       };
       const apexNews = await getNews();
-      if (options[0].name === "latest") {
-        return res.send({
+      if (apexNews) {
+        if (options[0].name === "latest") {
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              embeds: [
+                {
+                  title: apexNews[0].title,
+                  description: apexNews[0].short_desc,
+                  url: apexNews[0].link,
+                  image: {
+                    url: apexNews[0].img,
+                  },
+                },
+              ],
+            },
+          });
+        }
+        if (options[0].name === "lastthree") {
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              embeds: [
+                {
+                  title: apexNews[0].title,
+                  description: apexNews[0].short_desc,
+                  url: apexNews[0].link,
+                  image: {
+                    url: apexNews[0].img,
+                  },
+                },
+                {
+                  title: apexNews[1].title,
+                  description: apexNews[1].short_desc,
+                  url: apexNews[1].link,
+                  image: {
+                    url: apexNews[1].img,
+                  },
+                },
+                {
+                  title: apexNews[2].title,
+                  description: apexNews[2].short_desc,
+                  url: apexNews[2].link,
+                  image: {
+                    url: apexNews[2].img,
+                  },
+                },
+              ],
+            },
+          });
+        }
+      } else {
+        res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
-            embeds: [
-              {
-                title: apexNews[0].title,
-                description: apexNews[0].short_desc,
-                url: apexNews[0].link,
-                image: {
-                  url: apexNews[0].img,
-                },
-              },
-            ],
-          },
-        });
-      }
-      if (options[0].name === "lastthree") {
-        return res.send({
-          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-          data: {
-            embeds: [
-              {
-                title: apexNews[0].title,
-                description: apexNews[0].short_desc,
-                url: apexNews[0].link,
-                image: {
-                  url: apexNews[0].img,
-                },
-              },
-              {
-                title: apexNews[1].title,
-                description: apexNews[1].short_desc,
-                url: apexNews[1].link,
-                image: {
-                  url: apexNews[1].img,
-                },
-              },
-              {
-                title: apexNews[2].title,
-                description: apexNews[2].short_desc,
-                url: apexNews[2].link,
-                image: {
-                  url: apexNews[2].img,
-                },
-              },
-            ],
+            content:
+              "Command Failed. API Request was not able to be completed.",
           },
         });
       }
@@ -126,7 +132,11 @@ app.post("/interactions", async function (req, res) {
             "https://api.mozambiquehe.re/maprotation?auth=e31142840b23b46cc82ad64cdbbdb1ef"
           )
           .catch((err) => console.log(err));
-        return response.data;
+        if (response) {
+          return response.data;
+        } else {
+          return;
+        }
       };
       const rotationData = await getRotation();
       if (rotationData) {
@@ -163,6 +173,14 @@ app.post("/interactions", async function (req, res) {
                 },
               },
             ],
+          },
+        });
+      } else {
+        res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content:
+              "Command Failed. API Request was not able to be completed.",
           },
         });
       }
@@ -350,10 +368,10 @@ app.listen(PORT, () => {
 
   // Check if guild commands from commands.js are installed (if not, install them)
   HasGuildCommands(process.env.APP_ID, process.env.GUILD_ID, [
-    TEST_COMMAND,
     GET_PLAYER_INFO_COMMAND,
     GET_PLAYER_LEGEND_STATS_COMMAND,
     GET_APEX_NEWS_COMMAND,
     GET_MAP_ROTATION_COMMAND,
+    GET_BOT_DESCRIPTION_COMMAND,
   ]);
 });
