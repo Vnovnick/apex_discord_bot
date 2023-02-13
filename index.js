@@ -3,7 +3,6 @@ import "dotenv/config";
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMembers,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent,
   ],
@@ -18,12 +17,6 @@ client.on("ready", () => {
 client.on("interactionCreate", async (interaction) => {
   if (interaction.isChatInputCommand()) {
     console.log("yess");
-    if (interaction.commandName === "what") {
-      console.log("hello");
-      await interaction.reply({ content: "yo" });
-    }
-  } else {
-    console.log("something is wrong");
   }
 });
 
@@ -32,7 +25,7 @@ async function main() {
   const commands = [
     {
       name: "what",
-      description: "i dont know",
+      description: "i hate this",
     },
   ];
 
