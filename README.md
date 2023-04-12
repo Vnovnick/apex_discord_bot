@@ -2,7 +2,8 @@
 
 ### In-progress features
 
-- Get most recent match data (requires patreon sub with API - progress cancelled)
+- Re-create bot using DiscordJs to shirk dependency on ngrok to handle interactions and gain possibility of running on an external host (priority)
+- ~~Get most recent match data~~ (requires patreon sub with API - progress cancelled)
 - Find a way to link Origin and Discord (or at least get player usernames) to make requests w/o having to change server nickname
 
 ### Completed Features (So far only supported for PC/Origin players)
