@@ -1,5 +1,9 @@
 # Apex Stat Tracking Discord Bot
 
+### Demo GIF
+![discordGif](https://github.com/Vnovnick/apex_discord_bot/assets/97916174/beeeb724-6d19-44ca-88b2-65c05ce6e086)
+
+
 ### In-progress features
 
 - Re-create bot using DiscordJs to shirk dependency on ngrok to handle interactions and gain possibility of running on an external host (priority)
